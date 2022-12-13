@@ -3,6 +3,7 @@ var router = express.Router();
 
 require ('../models/connections');
 const Auth = require('../models/auths')
+//const Setting = require('../models/settings')
 const { checkBody } = require('../modules/checkBody');
 const uid2 = require('uid2');
 const bcrypt = require('bcrypt');
@@ -16,13 +17,13 @@ router.post('/signup', async function(req,res){
   }
 
   const hash = bcrypt.hashSync(req.body.password, 10)
+
   const newUser = await new Auth ({
     token:uid2(32),
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    password: hash,
-  
+    password: hash
     })
 
   // Check if the user has not already been registered
@@ -54,6 +55,27 @@ router.post('/signin',(req,res)=> {
   })
 })
   
+router.post('/socialsignin', async(req, res)=> {
+  const { firstName, lastName, email } = req.body
+  const found = await Auth.findOne({email})
+  if (!found) {
+    const newUser = await new Auth({token: uid2(32), firstName, lastName, email})
+    await newUser.save()
+    console.log(newUser)
+    res.json({
+      result: true, 
+      token: newUser.token,
+      message: 'User created in the db'
+    })
+  } else {
+    console.log(found)
+    res.json({
+      result: true, 
+      token: found.token,
+      message: 'User found in the db'
+    })
+  }
+})
 
 
 
