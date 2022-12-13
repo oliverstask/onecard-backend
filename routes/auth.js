@@ -22,7 +22,7 @@ router.post('/signup', async function(req,res){
     lastName: req.body.lastName,
     email: req.body.email,
     password: hash,
-    
+  
     })
 
   // Check if the user has not already been registered
