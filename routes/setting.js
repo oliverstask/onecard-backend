@@ -5,5 +5,6 @@ require ('../models/connections');
 const Setting = require('../models/settings')
 const { checkBody } = require('../modules/checkBody');
 
+module.exports = router
 
 
