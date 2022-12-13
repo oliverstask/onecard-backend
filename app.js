@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
-
+var settingRouter = require('./routes/setting');
 var app = express();
 
 const cors = require('cors')
@@ -21,5 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/setting', settingRouter);
+
 
 module.exports = app;
