@@ -1,12 +1,15 @@
 require('dotenv').config()
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var authRouter = require('./routes/auth');
-var settingRouter = require('./routes/setting');
-var app = express();
+const authRouter = require('./routes/auth');
+const settingsRouter = require('./routes/settings');
+const qrsRouter = require('./routes/qrs')
+const transactionsRouter = require('./routes/transactions')
+
+const app = express();
 
 const cors = require('cors')
 
@@ -20,7 +23,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/auth', authRouter);
-app.use('/setting', settingRouter);
+app.use('/settings', settingsRouter);
+app.use('/qrs', qrsRouter)
+app.use('/transactions', transactionsRouter);
 
 
 module.exports = app;
