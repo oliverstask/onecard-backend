@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
 const qrSchema = mongoose.Schema({
-  
     userId : {type: mongoose.Schema.Types.ObjectId, ref:'auths'},
-    settings :{type: mongoose.Schema.Types.ObjectId, ref:'settings'},
+    infos : String,
     isFav : Boolean,
     qrName : String,
     numScans : Number,
