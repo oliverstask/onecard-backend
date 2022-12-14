@@ -4,15 +4,33 @@ require ('../models/connections');
 const Qr = require('../models/qrs')
 
 router.post('/', async(req, res)=> {
-    res.json({result: true})
+    try {
+        res.json({result: true})
+
+    } catch(error) {
+     console.log(error)
+     res.json({result: true, message: 'Error'})
+    }
 })
 
-router.get('/:id', async(req, res)=> {
-    res.json({result: true})
+router.get('/:qrId', async(req, res)=> {
+    try {
+        res.json({result: true})
+
+    } catch(error) {
+     console.log(error)
+     res.json({result: true, message: 'Error'})
+    }
 })
 
 router.delete('/', async(req, res)=> {
-    res.json({result: true})
+    try {
+        res.json({result: true})
+
+    } catch(error) {
+     console.log(error)
+     res.json({result: true, message: 'Error'})
+    }
 })
 
 module.exports = router
