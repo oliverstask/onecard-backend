@@ -3,9 +3,20 @@ const router = express.Router();
 require ('../models/connections');
 const Qr = require('../models/qrs')
 
-router.post('/', async(req, res)=> {
+//Generate a new qr
+router.post('/newQr', async(req, res)=> {
     try {
-        res.json({result: true})
+        const { userId, infos, qrName } = req.body
+
+        const newQr = await new Qr({
+            userId,
+            infos,
+            qrName,
+            numScans: 0,
+            isFav: false
+        }).save()
+        console.log(newQr)
+        res.json({result: true, message: 'New qr generated'})
 
     } catch(error) {
      console.log(error)
@@ -13,9 +24,15 @@ router.post('/', async(req, res)=> {
     }
 })
 
-router.get('/:qrId', async(req, res)=> {
+
+//Show the list of all the qrs
+router.get('/:userId', async(req, res)=> {
     try {
-        res.json({result: true})
+
+        const { userId } = req.params
+        const qrList = await Qr.find({userId})
+        console.log(qrList)
+        res.json({result: true, qrList})
 
     } catch(error) {
      console.log(error)
@@ -23,14 +40,31 @@ router.get('/:qrId', async(req, res)=> {
     }
 })
 
+
+//Remove a qr from the list
 router.delete('/', async(req, res)=> {
     try {
-        res.json({result: true})
+        const { qrId } = req.body
+        const deletedQr = await Qr.findByIdAndRemove(qrId)
+        res.json({result: true, message: 'Qr deleted successfully'})
+    } catch(error) {
+     console.log(error)
+     res.json({result: false, message: 'Error'})
+    }
+})
+
+//Switch a qr in fav/notfav
+router.put('/', async(req, res)=> {
+    try {
+        const { qrId } = req.body
+        await Qr.findByIdAndUpdate(qrId, {isFav: true})
+        res.json({result: true, message: 'Switched qr to fav'})
 
     } catch(error) {
      console.log(error)
-     res.json({result: true, message: 'Error'})
+     res.json({result: false, message: 'Error'})
     }
 })
+
 
 module.exports = router
