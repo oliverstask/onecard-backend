@@ -10,4 +10,4 @@ function checkBody(body, keys) {
   return isValid;
 }
 
-module.exports = { checkBody };
+module.exports = checkBody ;
