@@ -6,7 +6,7 @@ const checkBody = require('../modules/checkBody');
 const createUser = require('../modules/createUser');
 const bcrypt = require('bcrypt');
 
-
+//Signup
 router.post('/signup', async function (req, res) {
   try {
     //Check if some fields are empty
@@ -39,7 +39,7 @@ router.post('/signup', async function (req, res) {
 })
   ;
 
-
+//Signin
 router.post('/signin', async (req, res) => {
   try {
     if (!checkBody(req.body, ['email', 'password'])) {
@@ -67,11 +67,11 @@ router.post('/signin', async (req, res) => {
     }
   } catch (error) {
     console.log(error)
-    res.json({ result: true, message: 'Error' })
+    res.json({ result: false, message: 'Error' })
   }
 })
 
-
+//Login with social media
 router.post('/sociallogin', async (req, res) => {
   try {
     const { firstName, lastName, email } = req.body
@@ -97,7 +97,7 @@ router.post('/sociallogin', async (req, res) => {
     }
   } catch (error) {
     console.log(error)
-    res.json({ result: true, message: 'Error' })
+    res.json({ result: false, message: 'Error' })
   }
 })
 

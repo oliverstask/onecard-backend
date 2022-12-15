@@ -8,13 +8,13 @@ const customSchema = mongoose.Schema({
 })
 
 const settingSchema = mongoose.Schema({
-    phoneNumber : Number,
+    phoneNumber : String,
     address : String,
     companyName : String,
     website : String,
     linkedin : String,
-    whatsApp : Number,
-    tweeter : String,
+    whatsApp : String,
+    twitter : String,
     instagram : String,
     facebook : String,
     tiktok : String,
