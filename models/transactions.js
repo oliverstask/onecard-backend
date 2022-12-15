@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
 
+const locationSchema = mongoose.Schema({
+    lat: String,
+    lon: String
+})
+
+
 const transactionSchema = mongoose.Schema({
   
-    qr : {type: mongoose.Schema.Types.ObjectId, ref:'qrs'},
-    me : {type: mongoose.Schema.Types.ObjectId, ref:'auths'},
+    qrId : {type: mongoose.Schema.Types.ObjectId, ref:'qrs'},
+    userId : {type: mongoose.Schema.Types.ObjectId, ref:'users'},
     date : Date,
-    location : {
-        latitude : String, 
-        longitude : String,
-    } 
+    location : locationSchema
 
 });
 
