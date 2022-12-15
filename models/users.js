@@ -8,6 +8,8 @@ const userSchema = mongoose.Schema({
   lastName: String,
   email: String,
   password: String,
+  photo: String,
+  cover: String,
   userSettings : {type: mongoose.Schema.Types.ObjectId, ref:'settings'}
 });
 

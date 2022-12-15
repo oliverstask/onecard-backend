@@ -1,13 +1,20 @@
 const express = require('express');
+const { findById } = require('../models/qrs');
 const router = express.Router();
 require ('../models/connections');
 const Qr = require('../models/qrs')
 const User = require('../models/users')
+
+
+
 //Generate a new qr
 router.post('/newQr', async(req, res)=> {
     try {
         const { userId, infos, qrName } = req.body
-
+        if (!userId || !infos || !qrName){
+            res.json({result: false, message: 'Missing values'})
+            return
+        }
         const newQr = await new Qr({
             userId,
             infos,
@@ -79,14 +86,19 @@ router.put('/fav', async(req, res)=> {
         const { qrId, userId } = req.body
         const userQrs = await Qr.find({userId})
         if (userQrs.some(e=> e._id == qrId)){
-            await Qr.updateMany({userId}, { $set:{isFav: false}})
-            await Qr.findByIdAndUpdate(qrId, {isFav: true})
-            console.log('Fav qr changed')
+            const qr = await Qr.findById(qrId)
+            const fav = qr.isFav
+            if (fav){
+                await Qr.updateMany({userId}, { $set:{isFav: false}})
+                res.json({result: true, message: 'You have no fav qr anymore'})
+            } else {
+                await Qr.updateMany({userId}, { $set:{isFav: false}})
+                await Qr.findByIdAndUpdate(qrId, {isFav : true})
+                res.json({result: true, message: 'This is your new fav qr'})
+            }
         } else {
-            console.log('You cannot modify this qr')
+            res.json({result: false, message: 'This is not your qr you cannot modify it'})
         }
-        res.json({result: true, message: 'Switched qr to fav'})
-
     } catch(error) {
      console.log(error)
      res.json({result: false, message: 'Error'})
