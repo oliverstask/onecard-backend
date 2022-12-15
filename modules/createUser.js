@@ -30,6 +30,8 @@ const createUser = async (firstName, lastName, email, socialLogin, password ) =>
               lastName,
               email,
               password: hash,
+              photo: null,
+              cover: null,
               userSettings: newUserSettings._id
             })
             await newUser.save()
@@ -42,6 +44,8 @@ const createUser = async (firstName, lastName, email, socialLogin, password ) =>
                 lastName,
                 email,
                 password: null,
+                photo: null,
+                cover: null,
                 userSettings: newUserSettings._id
               })
             await newUser.save()

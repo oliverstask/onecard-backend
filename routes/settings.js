@@ -24,6 +24,10 @@ router.get('/:userId', async(req, res)=> {
 router.put('/required', async(req, res)=> {
     try {
         const { userId, valueToUpdate, newValue } = req.body
+        if (!userId || !valueToUpdate || !newValue){
+            res.json({result: false, message: 'Missing values'})
+            return
+        }
         await User.findByIdAndUpdate(userId, {[valueToUpdate]: newValue})
         res.json({
             result: true,
@@ -39,6 +43,10 @@ router.put('/required', async(req, res)=> {
 router.put('/userSettings', async(req, res)=> {
     try {
         const { userId, valueToUpdate, newValue } = req.body
+        if (!userId || !valueToUpdate || !newValue){
+            res.json({result: false, message: 'Missing values'})
+            return
+        }
         const user = await User.findById(userId)
         const settingsId = user.userSettings
         if(newValue){

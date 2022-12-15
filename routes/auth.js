@@ -72,7 +72,7 @@ router.post('/signin', async (req, res) => {
 })
 
 //Login with social media
-router.post('/sociallogin', async (req, res) => {
+router.post('/socialLogin', async (req, res) => {
   try {
     const { firstName, lastName, email } = req.body
     const found = await User.findOne({ email })
