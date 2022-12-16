@@ -39,7 +39,7 @@ router.put('/required', async(req, res)=> {
     }
 })
 
-//Modifiy settings infos for qr generation
+//Modifiy settings infos 
 router.put('/userSettings', async(req, res)=> {
     try {
         const { userId, valueToUpdate, newValue } = req.body
