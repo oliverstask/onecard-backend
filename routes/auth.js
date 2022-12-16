@@ -11,7 +11,7 @@ router.post('/signup', async function (req, res) {
   try {
     //Check if some fields are empty
     if (!checkBody(req.body, ['firstName', 'lastName', 'email', 'password'])) {
-      res.json({ result: false, error: 'Missing or empty fields' })
+      res.json({ result: false, message: 'Missing or empty fields' })
       return;
     }
 
