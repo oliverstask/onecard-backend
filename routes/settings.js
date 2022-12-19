@@ -65,21 +65,16 @@ router.put('/userSettings', async(req, res)=> {
     }
 })
 
-// Add/Remove a custom info field
-router.put('/customs', async(req, res)=> {
+
+//Add a new custom info 
+router.post('/customs', async(req, res)=> {
     try {
         const { userId, name, url, icon, color } = req.body
         const user = await User.findById(userId)
         const settingsId = user.userSettings
         const settingsDocument = await Setting.findById(settingsId)
         const userCustoms = settingsDocument.customs
-        let newCustomArray
-
-        if (!userCustoms.some((e)=> e.name === name)){
-            newCustomArray = [...userCustoms, {name, url, icon, color}]
-        } else {
-            newCustomArray = userCustoms.filter((e)=> e.name !== name)
-        }
+        const newCustomArray = [...userCustoms, {name, url, icon, color}]
         await Setting.findByIdAndUpdate(settingsId, {customs : newCustomArray})
         res.json({result: true})
     } catch(error) {
@@ -88,6 +83,26 @@ router.put('/customs', async(req, res)=> {
     }
 })
 
+//Remove a custom info
+router.delete('/customs', async(req, res)=> {
+    try {
+        const { userId, url } = req.body
+        const user = await User.findById(userId)
+        const settingsId = user.userSettings
+        const settingsDocument = await Setting.findById(settingsId)
+        const userCustoms = settingsDocument.customs
+        if (userId && url){
+            const newCustomArray = userCustoms.filter((e)=> e.url !== url)
+            await Setting.findByIdAndUpdate(settingsId, {customs : newCustomArray})
+            res.json({result: true})
+        } else {
+            res.json({result: false, message: 'Missing information'})
+        }
+    } catch(error) {
+        console.log(error)
+        res.json({result: false, message: 'Error'})
+    }
+})
 
 
 module.exports = router

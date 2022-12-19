@@ -50,14 +50,11 @@ router.get('/qr/:qrId', async(req,res)=> {
     try {
         const { qrId } = req.params
         const qr = await Qr.findById(qrId)
-        if (!qr) {
-            res.json({result: false, message: 'qr not found'})
-        }
+        console.log(qr)
         const infosArr = qr.infos.split(' ')
+
         const userInfos = await User.findById(qr.userId).populate('userSettings')
-        if (!userInfos) {
-            res.json({result: false, message: 'no infos'})
-        }
+        console.log(userInfos)
         const {firstName, lastName, email } = userInfos
         const settings = userInfos.userSettings
         const responseArr = [{firstName}, {lastName}, {email}]
