@@ -71,6 +71,19 @@ router.get('/qr/:qrId', async(req,res)=> {
     }
 })
 
+// Update qr count
+router.get('/scanned/:qrId', async (req, res)=> {
+    try {
+        const { qrId } = req.params
+        const qr = await Qr.findById(qrId)
+        const oneMore = (qr.numScans) + 1
+        await Qr.findByIdAndUpdate(qrId, {numScans: oneMore})
+        res.json({result: true, message: 'Scanned one more time'})
+    } catch(error) {
+     console.log(error)
+     res.json({result: false, message: 'Error'})
+    }
+})
 //Remove a qr from the list
 router.delete('/', async(req, res)=> {
     try {
