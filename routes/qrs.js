@@ -101,6 +101,7 @@ router.put('/fav', async(req, res)=> {
     try {
         const { qrId, userId } = req.body
         const userQrs = await Qr.find({userId})
+        console.log(userQrs)
         if (userQrs.some(e=> e._id == qrId)){
             const qr = await Qr.findById(qrId)
             const fav = qr.isFav
