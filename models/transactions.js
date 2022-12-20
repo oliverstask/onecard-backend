@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const locationSchema = mongoose.Schema({
-    lat: String,
-    lon: String
+    lat: Number,
+    lon: Number
 })
 
 

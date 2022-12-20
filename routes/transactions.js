@@ -6,9 +6,9 @@ const Transaction = require('../models/transactions')
 //Add a contact to the list on the scan
 router.post('/', async (req, res)=> {
     try {
-        const { qrId, userId, lat, lon, firstName, lastName} = req.body
+        const { qrId, userId, lat, lon,} = req.body
         const date = new Date()
-        await new Transaction({qrId, userId, date, firstName, lastName, location:{lat, lon}}).save()
+        await new Transaction({qrId, userId, date, location:{lat, lon}}).save()
         res.json({result: true, message: 'New transaction created'})
     } catch(error) {
      console.log(error)
